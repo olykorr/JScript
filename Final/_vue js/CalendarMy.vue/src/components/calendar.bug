@@ -1,0 +1,30 @@
+getDay: function() {
+  let dat = moment(this.firstDayOfWeek);
+
+//  var dat = new Date(this.firstDayOfWeek);
+  var d = new Date();
+
+  let result = [];
+  for (let i = 1; i <= 6; i++) {
+    let row = [];
+    for (let j = 1; j <= 7; j++) {
+
+      const data = {
+          date:  this.MakeDat(this.firstDayOfWeek),
+      //  date: dat.format("YYYY-MM-DD"),
+          isSame: this.isSame(dat)
+      };
+      if (d.getFullYear()===dat.getFullYear()&& d.getMonth()===dat.getMonth()&& d.getDate()===dat.getDate()
+
+      ) {
+        data.current = true;
+      }
+      row.push(data);
+      dat = dat.getDate()+1;
+    //  dat = dat.add(1, "days");
+    }
+    result.push(row);
+  }
+  return result;
+},
+//  },

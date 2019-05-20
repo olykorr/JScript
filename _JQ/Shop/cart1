@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<ul id="products_list">
+    <li></li>
+</ul>
+<ul id="cart"></ul>
+<div id="counter"></div>
+<div id="total"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+    (function($){
+        console.time('Shop');
+        var $products_list = $('#products_list');
+        var $cart = $('#cart');
+        var products = [
+            {
+                id: 0,
+                name: 'Bread',
+                price: 10,
+            },
+            {
+                name: 'Milk',
+                price: 20,
+            },
+            {
+                name: 'Chezz',
+                price: 30,
+            },
+        ];
+
+        var cart = JSON.parse(localStorage.cart || '{}'); 
+        console.log(cart);
+
+		var save_cart = function () {
+            localStorage.cart = JSON.stringify(cart);
+        };
+
+        var make_counter = function() {
+            var counter = 0;
+            for (var index in cart) {
+                counter += +cart[index];
+            }
+            $('#counter').text('All: ' + counter);
+        };
+
+        var build_cart = function() {
+                var cart_html = Object.keys(cart).map(function(prod_index) { 
+                var product = products[prod_index];
+                var count = cart[prod_index]; //[ 12, 0, 2] amount of items
+                var sum = count * product.price;
+                if (count === 0){
+                    return ;
+                }
+                return '<li>' +
+                    product.name + ' x ' + count + ' = ' + sum +
+                   '<button data-index="'+ prod_index +'" type="button" class="js_removeFromCart">X</button>'+
+                '</li>';
+            }).join('');
+
+            $cart.html(cart_html); 
+            make_counter();
+            total_price();
+        };
+
+
+        var total_price = function(){
+            var total = 0;
+            for (var index in cart) {
+                var count = cart[index];
+                var product = products[index];
+                var price = product.price;
+                total += count * price;
+            }
+            $('#total').text('Total: ' + total);
+        }
+
+        build_cart();
+
+        var products_html_arr = products.map(function(product, index, current_array) {
+            return '<li>' +
+                product.name + ' $' + product.price +
+                '<button type="button" class="js_addToCart">Add</button>' +
+                '</li>';
+        })
+
+        $products_list.html(   products_html_arr.join('')    )
+
+        $products_list.on('click', '.js_addToCart', function() {
+            var $li = $(this).parent();
+            var index = $li.index();
+
+            if (void 0 === cart[index]) 
+			{
+                cart[index] = 1;
+            }
+			else 
+			{
+                cart[index]++;
+            }
+
+            save_cart();
+            build_cart();
+        });
+
+        $cart.on('click', '.js_removeFromCart', function() {
+            var index = $(this).data('index');
+            delete cart[index];
+            build_cart();
+            save_cart();
+        });
+
+        console.timeEnd('Shop');
+    }(jQuery))
+</script>
+</body>
+</html>
