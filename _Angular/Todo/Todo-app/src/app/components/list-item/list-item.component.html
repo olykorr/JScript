@@ -1,0 +1,8 @@
+<li>
+  <button (click)='remove2()'>-</button>
+  <button (click)='reset()'>R</button>
+  <button (click)='edit()' *ngIf='!edit_param'>Edit</button>
+  <button (click)='apply()' *ngIf='edit_param'>Apply</button>
+  <span *ngIf='!edit_param' >{{index}} - {{item}}</span>
+  <input type="text" [(ngModel)]="item" *ngIf='edit_param'>
+</li>
