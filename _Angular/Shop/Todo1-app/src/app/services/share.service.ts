@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class ShareService {
-  /*list = [
-    'First',
-    'Second'
-  ];*/
 
+
+
+export class ShareService {
+  
 
   productList = [
     {
@@ -49,8 +48,8 @@ export class ShareService {
     count: 0
   }];
   list = JSON.parse(localStorage['list'] || JSON.stringify(['First','Second']));
- // cart = JSON.parse(localStorage.getItem('cart') || '[]');
   products = JSON.parse(localStorage['shop'] || JSON.stringify(this.listForCart));
+  
   constructor() {
 
   }
