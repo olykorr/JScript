@@ -7,54 +7,29 @@ import { ShareService } from '../../services/share.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-
   constructor(private ss: ShareService) { }
-
   ngOnInit() {
   }
 
-  get allPrice(){
-    let allPricee = 0;
-    this.ss.products.forEach(function(element) {
-      allPricee+=element.price*element.count;
+  get totalPrice()
+  {
+    let totalPrices = 0;
+    this.ss.products.forEach(function(element)
+    {
+      totalPrices+=element.price*element.count;
     })
-    return allPricee;
+    return totalPrices;
   }
 
-  remove(index){
-    //this.ss.productList[index].count--;
-    //this.todo.splice(index,1);
-    this.ss.listForCart.splice(index,1);
+  remove(index)
+  {
+    this.ss.cartList.splice(index,1);
     this.ss.products.splice(index,1);
-    localStorage['shop'] = JSON.stringify(this.listForCart);
+    localStorage['shop'] = JSON.stringify(this.cartList);
   }
 
-  get listForCart(){
-    /* this.ss.productList.forEach(function(element) {
-      if(element.count>0){
-        this.listForCart.push(element);
-      }
-    }); */
-    
+  get cartList()
+  {
     return this.ss.products;
   }
-
-  /*get ids() {
-    
-    return Object.keys(this.listForCart);
-  }*/
-
-  /*get productList() {
-    let map = {};
-
-    this.ss.productList.forEach((product) => {
-      if(product.count>0){
-        map[product.id] = product;
-      }
-      
-    })
-    
-    return map;
-  }*/
-
 }

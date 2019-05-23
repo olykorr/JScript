@@ -14,20 +14,20 @@ export class ShopComponent implements OnInit {
   }
 
   add(index){
-    this.ss.listForCart.forEach((product) => {
-      if(/*product.id != index*/ this.ss.listForCart.indexOf(this.ss.productList[index])<0){
+    this.ss.cartList.forEach((product) => {
+      if(this.ss.cartList.indexOf(this.ss.productList[index])<0)
+      {
         this.ss.productList[index].count++;
-        this.ss.listForCart.push(this.ss.productList[index]);
+        this.ss.cartList.push(this.ss.productList[index]);
         this.ss.products.push(this.ss.productList[index]);
-        //this.ss.listForCart[index].count++;
-      }else if(index === product.id){        
+      }
+      else if(index === product.id)
+      {
         product.count++;
       }
-	localStorage['shop'] = JSON.stringify(this.ss.listForCart);
+	localStorage['shop'] = JSON.stringify(this.ss.cartList);
     })
-    
-    /*this.ss.listForCart.push(this.ss.productList[index]);
-    this.ss.listForCart[index].count++;*/
+
   }
 
   get productList(){
