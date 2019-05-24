@@ -91,7 +91,7 @@
 
 </template>
 <script>
-import moment from "moment";
+//import moment from "moment";
 import day from "./day";
 //import eventAdd from "./eventAdd";
 //import eventView from "./eventView";
