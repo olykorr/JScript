@@ -15,7 +15,8 @@
             <li v-for="message in messages">{{ message }}</li>
         </ul>
         <div>{{ online }}</div>
-        <input type="text" v-model="newMessage">
+		<input type="text" v-if="!this.online" v-model="name" placeholder="name">
+        <input type="text" v-else v-model="newMessage">
         <button @click="send">Send</button>
         <button @click="disconnect">Disconnect</button>
         <button @click="connect">Connect</button>
@@ -30,19 +31,20 @@
                 return {
                     messages: [],
                     newMessage: '',
+					name:'',
                     online: false,
                     memory: {}
                 }
             },
             created() {
-                this.connect();
+                //this.connect();
             },
             destroyed() {
                 this.ws.close();
             },
             methods: {
                 send() {
-                    this.ws.send(this.newMessage);
+                    this.ws.send(this.name+" : "+this.newMessage);
                     this.newMessage = '';
                 },
                 messageHandler(message) {
